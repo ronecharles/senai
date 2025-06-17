@@ -1,0 +1,36 @@
+<script>
+  let x = 60;
+  let y = 12;
+  const primos = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+  const mmc = [];
+  const mdc = [];
+
+  for (const p of primos) {
+    while (x % p === 0 || y % p === 0) {
+      mmc.push(p);
+      if (x % p === 0 && y % p === 0) {
+        mdc.push(p);
+      }
+      if (x % p === 0) x /= p;
+      if (y % p === 0) y /= p;
+    }
+  }
+
+  console.log('Fatores do MMC:', mmc);
+  console.log('Fatores do MDC:', mdc);
+
+  let valorMMC = 1;
+  for (let fator of mmc) {
+    valorMMC *= fator;
+  }
+
+  let valorMDC = 1;
+  for (let fator of mdc) {
+    valorMDC *= fator;
+  }
+
+  console.log('Valor do MMC:', valorMMC); 
+  console.log('Valor do MDC:', valorMDC); 
+</script>
+
+

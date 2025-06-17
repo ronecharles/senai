@@ -1,0 +1,67 @@
+<script>
+	const contaBancaria = {
+		nome: "Maria",
+		saldo: 0,
+		historicos: [],
+		depositar: function (valor) {
+			let valorEmReais = valor / 100;
+			if (this.eInteiro(valor)) {
+				this.saldo += valor;
+				console.log(
+					`Deposito de R$${valorEmReais} realizado para  o cliente: ${this.nome}`
+				);
+				this.adicionaHistorico("Deposito", valor);
+			} else {
+				console.log(
+					`--> ERROR <-- O valor informado deve ser um número inteiro`
+				);
+				this.adicionaHistorico("Depósito", "A operação não obteve sucesso");
+			}
+		},
+		sacar: function (valor) {
+			let valorReais = valor / 100;
+			if (this.eInteiro(valor)) {
+				if (valor >= this.saldo) {
+					console.log(`Saldo insuficiente para o saque de: ${this.nome}`);
+					this.adicionaHistorico("Saque", "A operação não obteve sucesso");
+				} else {
+					this.saldo -= valor;
+					console.log(
+						`Saque de R$${valorReais} realizado para o cliente: ${this.nome}`
+					);
+					this.adicionaHistorico("Saque", valor);
+				}
+			} else {
+				console.log(
+					`--> ERROR <-- O valor informado deve ser um número inteiro`
+				);
+				this.historicos.push({
+					tipo: "Saque",
+					valor: "A operação não obteve sucesso",
+				});
+			}
+		},
+		extrato: function () {
+			console.log(
+				`\nExtrato de ${this.nome} - Saldo: R$${this.saldo} \nHistórico:`
+			);
+			for (let operacao of this.historicos) {
+				console.log(`${operacao.tipo} de R$${operacao.valor / 100}`);
+			}
+		},
+		eInteiro: function (valor) {
+			return Number.isInteger(valor);
+		},
+		adicionaHistorico: function (tipo, valor) {
+			this.historicos.push({ tipo: tipo, valor: valor });
+		},
+	};
+
+	contaBancaria.depositar(10000);
+
+	contaBancaria.sacar(50000);
+
+	contaBancaria.sacar(5000);
+
+	contaBancaria.extrato();
+</script>
